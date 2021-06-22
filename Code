@@ -1,0 +1,160 @@
+#include <iostream>
+#include <time.h>
+#include <stdio.h>
+
+using namespace std;
+int h = 0;
+
+int main()
+{
+    //输出欢迎信息
+    cout << "************************************************" << endl;
+    cout << "*             欢迎来到幸运号码游戏             *" << endl;
+    cout << "*            请输入你的 7 个幸运号码           *" << endl;
+    cout << "*            请用空格键分隔投注号码            *" << endl;
+    cout << "************************************************" << endl;
+    cout << '\n';
+
+    //投注提示
+    cout << "请投注7个号码(1-29): ";
+
+    //******创建投注数组与抽取结果数组******
+    int number_29[29] = { 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29 };//抽取球来源数组
+    int bet_7[7] = {};//用户投注数字存储数组
+    int random_8[8] = {};//抽取8个数字的结果
+    int commonball_7[7] = {};//普通数字抽取结果
+    int specialball_1[1] = {};//特殊数字抽取结果
+    int jackpotnumber[7] = {};//中奖记录数组
+
+    // create counters for loop cout usage
+    int x, y, y1, z = 0;
+
+    //******定义用户投注的号码顺序******
+    cin >> bet_7[0] >> bet_7[1] >> bet_7[2] >> bet_7[3] >> bet_7[4] >> bet_7[5] >> bet_7[6];
+
+    //******输出用户投注数字******
+    cout << "********************您的投注*******************" << endl;
+
+    // display user's input from the array 分割输入的数字
+    int bet_7count;
+    for (bet_7count = 0; bet_7count < 7; bet_7count++)
+    {
+        cout << bet_7[bet_7count] << ' ';
+    }
+
+    cout << '\n';
+    cout << "***********************************************" << endl;
+
+    // print 2 new lines for easier to read
+    cout << '\n';
+    cout << '\n';
+
+    //******随机数选取结构******
+
+    //设置随机数种
+    srand((unsigned)time(NULL));
+
+    //随机数抽取
+    int numbercount;
+    int count = 0;
+    while (count < 8)
+    {
+        numbercount = rand() % 29;
+        if (number_29[numbercount] != 0)
+        {
+            random_8[count] = number_29[numbercount];
+            number_29[numbercount] = 0;
+            count++;
+        }
+    }
+
+    // ******显示抽取号码结果******
+    cout << "********************开奖结果*******************" << endl;
+
+    int random_8count;
+    for (random_8count = 0; random_8count < 8; random_8count++)
+    {
+        cout << random_8[random_8count] << ' ';
+    }
+
+    cout << '\n';
+    cout << "***********************************************" << endl;
+
+    // print 2 new lines for easier to read
+    cout << '\n';
+    cout << '\n';
+
+    //******将抽取结果赋值给数组******
+
+    //普通号码赋值
+    for (int a = 0; a < 7; a++)
+    {
+        commonball_7[a] = random_8[a];
+    }
+
+    //特殊号码赋值
+    specialball_1[0] = random_8[7];
+
+    //******判断与记录中奖情况******
+
+    //比较得出普通球中奖数字的数量，并记录到输出数组中
+    for (x = 0; x < 7; x++)
+    {
+        for (y = 0; y < 7; y++)
+        {
+            if (bet_7[y] == commonball_7[x])
+            {
+                jackpotnumber[y] = bet_7[y];
+                z++;
+            }
+        }
+    }
+   
+    //判断特殊球是否中奖
+    for (y1 = 0; y1 < 7; y1++)
+    {
+        if (bet_7[y1] == specialball_1[0])
+        {
+            h = 1;
+        }
+    }
+
+    // ******display the bet result******
+
+    //判断与显示中奖普通号码
+    if (z > 0)
+    {
+        cout << "获奖结果: 你中了 " << z << " 个普通号码，分别是" ;
+        for (y = 0; y < 7; y++)
+        {
+            if (jackpotnumber[y] != 0)
+            {
+                cout << jackpotnumber[y] << " " ;
+            }
+        }
+    }
+    else
+    {
+        cout << "很遗憾您没有中普通号码" << endl;
+    }
+
+    // print 2 new lines for easier to read
+    cout << '\n';
+    cout << '\n';
+
+    //判断与显示中奖特殊号码
+    if (h == 1)
+    {
+        cout << "获奖结果: 你中了特殊号码，它是" << specialball_1[0] ;
+    }
+    else
+    {
+        cout << "很遗憾您没有中特殊号码" << endl;
+    }
+
+    // print a new line for easier to read
+    cout << '\n';
+
+    system("pause");
+    return 0;
+}
