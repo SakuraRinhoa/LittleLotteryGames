@@ -1,3 +1,3 @@
 # LittleLotteryGames
-其实是期末作业QWQ
+其实是C++期末作业QWQ
 因为花了些时间去研究所以放在这里了……
